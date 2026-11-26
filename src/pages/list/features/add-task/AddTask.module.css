@@ -1,0 +1,83 @@
+/* The form's children: the title, "Ngày hạn" and "Giờ" fields (divs), the due error (p), the button. */
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 160px 104px auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.form > * {
+  grid-row: 1;
+}
+
+.form > div:nth-of-type(1) {
+  grid-column: 1;
+}
+
+.form > div:nth-of-type(2) {
+  grid-column: 2;
+}
+
+.form > div:nth-of-type(3) {
+  grid-column: 3;
+}
+
+.form > button {
+  grid-column: 4;
+  /* level with the inputs, under the height of a label */
+  margin-top: 23px;
+}
+
+.form > p {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  margin: 0;
+}
+
+.failed {
+  color: var(--late);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
+
+@media (max-width: 1099px) {
+  .form {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  /* "Việc mới" stays for screen readers only */
+  .form > div:nth-of-type(1) label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .form > button {
+    grid-column: 2;
+    justify-self: stretch;
+    margin-top: 0;
+  }
+
+  .form > div:nth-of-type(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .form > div:nth-of-type(3) {
+    grid-column: 2;
+    grid-row: 2;
+    width: 104px;
+  }
+
+  .form > p {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
+  .form:not(.open):not(:focus-within) > div:nth-of-type(n + 2) {
+    display: none;
+  }
+}
