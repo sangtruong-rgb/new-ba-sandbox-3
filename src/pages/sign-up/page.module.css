@@ -1,0 +1,55 @@
+.auth {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  min-height: 100vh;
+}
+
+.brand {
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding: 64px 56px;
+}
+
+.logo {
+  font: 600 56px/60px var(--font-display);
+  margin: 0 0 16px;
+}
+
+.tagline {
+  font-size: 20px;
+  line-height: 30px;
+  max-width: 18em;
+  margin: 0;
+}
+
+.form {
+  padding: 64px 72px;
+  max-width: 560px;
+  min-width: 0;
+}
+
+@media (max-width: 1099px) {
+  .auth {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .brand {
+    padding: 16px;
+  }
+
+  .logo {
+    font-size: 28px;
+    line-height: 32px;
+    margin: 0;
+  }
+
+  .tagline {
+    display: none;
+  }
+
+  .form {
+    padding: 24px 16px;
+    max-width: none;
+  }
+}
