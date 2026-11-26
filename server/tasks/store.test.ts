@@ -27,6 +27,15 @@ describe('server/tasks/store', () => {
     expect(noDue.id).not.toBe(t.id);
   });
 
+  test("C2 · createApp's now stamps createdAt of the tasks it creates", () => {
+    const probe = captureDeps();
+    const at = new Date('2026-11-27T08:15:30.123Z');
+    createApp({ databasePath: ':memory:', features: [probe.feature], now: () => at });
+    const deps = probe.deps();
+    const an = deps.users.create('an@example.com', 'mat-khau-dai');
+    expect(deps.tasks.create(an.id, { title: 'Gọi điện cho mẹ', dueAt: null }).createdAt).toBe('2026-11-27T08:15:30.123Z');
+  });
+
   test('C2 · the store validates nothing: an empty title is stored as given', () => {
     const { store, an } = setup();
     const t = store.create(an.id, { title: '', dueAt: null });

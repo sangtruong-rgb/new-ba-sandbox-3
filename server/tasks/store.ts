@@ -7,7 +7,8 @@ type Row = { id: string; title: string; done: number; due_at: string | null; cre
 
 const toTask = (r: Row): Task => ({ id: r.id, title: r.title, done: r.done === 1, dueAt: r.due_at, createdAt: r.created_at });
 
-export function tasks(db: Database.Database): TaskStoreApi {
+/** `now` is the server's clock (createApp's `now`); it stamps createdAt. */
+export function tasks(db: Database.Database, now: () => Date = () => new Date()): TaskStoreApi {
   const one = db.prepare<[string, string], Row>(
     'SELECT id, title, done, due_at, created_at FROM tasks WHERE id = ? AND user_id = ?',
   );
@@ -22,7 +23,7 @@ export function tasks(db: Database.Database): TaskStoreApi {
     },
     create(userId, { title, dueAt }) {
       const id = randomUUID();
-      const createdAt = new Date().toISOString();
+      const createdAt = now().toISOString();
       db.prepare('INSERT INTO tasks (id, user_id, title, done, due_at, created_at) VALUES (?, ?, ?, 0, ?, ?)').run(
         id,
         userId,
