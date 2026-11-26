@@ -11,6 +11,16 @@ export const routes: ServerFeature['routes'] = [
 
 export function register(app: Hono<AppEnv>, deps: ServerDeps): void {
   app.post('/api/auth/sign-in', async (c) => {
+    // Login CSRF guard: a cross-site form can only send simple requests (text/plain,
+    // form-encoded, multipart), so only JSON bodies from the same site are accepted.
+    const contentType = (c.req.header('Content-Type') ?? '').split(';')[0].trim().toLowerCase();
+    if (contentType !== 'application/json') {
+      return c.json({ error: 'unsupported_media_type' }, 415);
+    }
+    const fetchSite = c.req.header('Sec-Fetch-Site');
+    if (fetchSite !== undefined && fetchSite !== 'same-origin' && fetchSite !== 'none') {
+      return c.json({ error: 'cross_site' }, 403);
+    }
     let body: unknown = null;
     try {
       body = await c.req.json();
