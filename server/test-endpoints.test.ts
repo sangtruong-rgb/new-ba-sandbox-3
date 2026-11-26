@@ -34,6 +34,16 @@ describe('server TestEndpoints', () => {
     expect(second.id).toBe(first.id);
   });
 
+  test('C3 · POST /api/test/session with " An@Example.com " signs in the account of "an@example.com" (users normalises)', async () => {
+    vi.stubEnv('NODE_ENV', 'test');
+    const probe = captureDeps();
+    const app = createApp({ databasePath: ':memory:', features: [probe.feature] });
+    const an = probe.deps().users.create('an@example.com', 'mat-khau-rieng');
+    const res = await app.request('/api/test/session', json({ email: ' An@Example.com ' }));
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual(an);
+  });
+
   test("C3 · with NODE_ENV=test, POST /api/test/tasks creates the tasks for the session's user and answers Task[]", async () => {
     vi.stubEnv('NODE_ENV', 'test');
     const app = createApp({ databasePath: ':memory:', features: [] });

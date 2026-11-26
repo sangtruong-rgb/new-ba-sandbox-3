@@ -1,12 +1,12 @@
 // The app's construction, shared by server/app.ts (createApp, the default export) and
 // server/testing.ts (testApp). It opens no database and loads no feature on import.
 import { Hono } from 'hono';
-import { users } from './auth/users';
+import { EmailTakenError, users } from './auth/users';
 import { bindSessions, endSession, requireUser, sessionUser, startSession } from './auth/sessions';
 import { openDatabase } from './db';
 import { featuresOnDisk, registerFeatures } from './registry';
 import { tasks } from './tasks/store';
-import type { AppEnv, ServerDeps, ServerFeature } from './types';
+import type { AppEnv, ServerDeps, ServerFeature, User } from './types';
 
 export type CreateAppOptions = { databasePath?: string; features?: ServerFeature[]; now?: () => Date };
 
@@ -17,8 +17,8 @@ type SeedTask = { title?: unknown; done?: unknown; dueAt?: unknown; createdAt?: 
 export function buildApp(opts: CreateAppOptions, mode: { testEndpoints: boolean }): Hono<AppEnv> {
   const db = openDatabase(opts.databasePath ?? ':memory:');
   const now = opts.now ?? (() => new Date());
-  const userStore = users(db);
-  const taskStore = tasks(db);
+  const userStore = users(db, now);
+  const taskStore = tasks(db, now);
   const deps: ServerDeps = { db, users: userStore, tasks: taskStore, startSession, endSession, requireUser };
 
   const app = new Hono<AppEnv>();
@@ -41,10 +41,14 @@ export function buildApp(opts: CreateAppOptions, mode: { testEndpoints: boolean 
     app.post('/api/test/session', async (c) => {
       const body = (await c.req.json().catch(() => null)) as { email?: unknown } | null;
       if (!body || typeof body.email !== 'string' || !body.email.trim()) return c.json({ error: 'invalid_email' }, 400);
-      const existing = db
-        .prepare<[string], { id: string; email: string }>('SELECT id, email FROM users WHERE email = ?')
-        .get(body.email.trim().toLowerCase());
-      const user = existing ?? userStore.create(body.email, TEST_PASSWORD);
+      // `users` alone normalises emails: an existing account surfaces as EmailTakenError.
+      let user: User;
+      try {
+        user = userStore.create(body.email, TEST_PASSWORD);
+      } catch (e) {
+        if (!(e instanceof EmailTakenError)) throw e;
+        user = e.user;
+      }
       startSession(c, user.id);
       return c.json({ id: user.id, email: user.email });
     });
