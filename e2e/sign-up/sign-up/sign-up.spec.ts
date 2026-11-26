@@ -198,7 +198,9 @@ test.describe('sign-up/sign-up · an email that already has an account', () => {
     const link = emailError.getByRole('link', { name: 'Đăng nhập', exact: true });
     await expect(link).toHaveAttribute('href', '/dang-nhap');
 
-    await expect(f.email).toHaveValue(typed);
+    // an <input type="email"> (C18) drops the spaces around its value in the browser itself,
+    // so the field keeps the address as typed, without them; the server side of spaces is in server.test.ts
+    await expect(f.email).toHaveValue(typed.trim());
     expect(pathOf(page.url())).toBe('/dang-ky');
 
     // not signed in, and the account is still the first one
