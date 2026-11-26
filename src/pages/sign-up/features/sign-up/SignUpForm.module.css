@@ -1,0 +1,27 @@
+.form {
+  margin: 0;
+}
+
+.heading {
+  font: 600 30px/1.15 var(--font-display);
+  margin: 0 0 24px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.failed {
+  color: var(--late);
+  font-weight: 600;
+  margin: 16px 0 0;
+}
+
+.alt {
+  margin: 20px 0 0;
+  font-size: 14px;
+}
+
+.alt a {
+  color: var(--ink);
+}
