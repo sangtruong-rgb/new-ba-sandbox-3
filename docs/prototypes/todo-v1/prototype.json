@@ -1,0 +1,197 @@
+{
+ "title": "Việc: todo-v1",
+ "binding": "look",
+ "screens": [
+  {
+   "id": "sign-in",
+   "title": "Đăng nhập",
+   "criteria": [
+    "C1",
+    "C12",
+    "C19",
+    "C25"
+   ],
+   "shows": "The sign-in page: the ink brand panel with the app name, the form with Email, Mật khẩu, Đăng nhập and a link to sign up"
+  },
+  {
+   "id": "sign-in-error",
+   "title": "Đăng nhập sai",
+   "criteria": [
+    "C20"
+   ],
+   "shows": "After a wrong password: the message above the first field, the email kept, the password emptied"
+  },
+  {
+   "id": "session-ended",
+   "title": "Phiên đã hết",
+   "criteria": [
+    "C4",
+    "C21"
+   ],
+   "shows": "Reached after a 401 while using the app: the session-ended line above the first field"
+  },
+  {
+   "id": "sign-up",
+   "title": "Đăng ký",
+   "criteria": [
+    "C13",
+    "C18"
+   ],
+   "shows": "The sign-up page: Email, Mật khẩu, Tạo tài khoản, a link to sign in"
+  },
+  {
+   "id": "sign-up-error",
+   "title": "Đăng ký: lỗi",
+   "criteria": [
+    "C14"
+   ],
+   "shows": "Both field errors under their fields, the typed values kept"
+  },
+  {
+   "id": "list",
+   "title": "Danh sách, một việc đang mở",
+   "criteria": [
+    "C6",
+    "C7",
+    "C22",
+    "C26",
+    "C27",
+    "C31",
+    "C32",
+    "C33",
+    "C36",
+    "C37",
+    "C38",
+    "C39",
+    "C41",
+    "C42",
+    "C43",
+    "C45",
+    "C46",
+    "C51"
+   ],
+   "shows": "Header with the email and Đăng xuất; today's date and the late/today summary; the tabs with counts; the add form; rows in due order with the late ones in red after 'Trễ ·'; the first late task open in the detail column at 1440 with its edit form and actions"
+  },
+  {
+   "id": "list-empty",
+   "title": "Danh sách trống",
+   "criteria": [
+    "C7",
+    "C12",
+    "C31"
+   ],
+   "shows": "A new account: no tasks, no tabs and no detail column; the empty-list message under the add form"
+  },
+  {
+   "id": "add-invalid",
+   "title": "Thêm việc: thiếu tên",
+   "criteria": [
+    "C28"
+   ],
+   "shows": "The add form after Thêm with an empty title: Nhập tên việc under the title field, which is marked invalid"
+  },
+  {
+   "id": "filter-done-empty",
+   "title": "Lọc Đã xong: trống",
+   "criteria": [
+    "C44"
+   ],
+   "shows": "The Đã xong tab chosen with no done task: its empty text"
+  },
+  {
+   "id": "task",
+   "title": "Sửa việc",
+   "criteria": [
+    "C33",
+    "C47"
+   ],
+   "shows": "The edit form and actions of a task due today; at 390 the detail view alone with ‹ Danh sách"
+  },
+  {
+   "id": "task-invalid",
+   "title": "Sửa việc: thiếu tên",
+   "criteria": [
+    "C48"
+   ],
+   "shows": "The edit form after Lưu with an empty title: Nhập tên việc under Tên việc"
+  }
+ ],
+ "notShown": [
+  {
+   "criterion": "C2",
+   "why": "the server's stores and core routes"
+  },
+  {
+   "criterion": "C3",
+   "why": "the server registry, test endpoints and testApp"
+  },
+  {
+   "criterion": "C5",
+   "why": "the feature registry, error boundaries and logger"
+  },
+  {
+   "criterion": "C8",
+   "why": "shared rules and form components; every form here shows them"
+  },
+  {
+   "criterion": "C9",
+   "why": "test setup and fixtures"
+  },
+  {
+   "criterion": "C10",
+   "why": "lint, typecheck and the tokens every screen uses"
+  },
+  {
+   "criterion": "C11",
+   "why": "CLAUDE.md"
+  },
+  {
+   "criterion": "C15",
+   "why": "a server answer; type thu.ha@example.com on #sign-up to see it"
+  },
+  {
+   "criterion": "C16",
+   "why": "the sign-up route"
+  },
+  {
+   "criterion": "C17",
+   "why": "in-flight and failure states; the words are in the criterion"
+  },
+  {
+   "criterion": "C23",
+   "why": "the sign-in and sign-out routes"
+  },
+  {
+   "criterion": "C24",
+   "why": "in-flight and failure states; the words are in the criterion"
+  },
+  {
+   "criterion": "C29",
+   "why": "the add route"
+  },
+  {
+   "criterion": "C30",
+   "why": "in-flight and failure states; the words are in the criterion"
+  },
+  {
+   "criterion": "C34",
+   "why": "the done and delete routes"
+  },
+  {
+   "criterion": "C35",
+   "why": "in-flight, failure and 404 states; the words are in the criterion"
+  },
+  {
+   "criterion": "C40",
+   "why": "crossing midnight; a clock rule"
+  },
+  {
+   "criterion": "C49",
+   "why": "the edit route"
+  },
+  {
+   "criterion": "C50",
+   "why": "in-flight, failure and 404 states; the words are in the criterion"
+  }
+ ]
+}
