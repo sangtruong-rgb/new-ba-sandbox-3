@@ -1,0 +1,45 @@
+.heading {
+  font: 600 24px/1.25 var(--font-display);
+  margin: 0 0 16px;
+}
+
+.name {
+  margin-bottom: 12px;
+}
+
+/* "Ngày hạn", "Giờ" and, under both, the due error */
+.due {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 104px;
+  column-gap: 8px;
+  margin-bottom: 12px;
+}
+
+.due > p {
+  grid-column: 1 / -1;
+}
+
+.late {
+  color: var(--late);
+  font-weight: 600;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.created {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 14px 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.failed {
+  color: var(--late);
+  font-size: 13px;
+  margin: 8px 0 0;
+}
