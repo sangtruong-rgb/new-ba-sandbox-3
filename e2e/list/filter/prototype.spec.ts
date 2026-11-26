@@ -3,7 +3,7 @@
 import type { Page } from '@playwright/test';
 import { test, expect } from '../../support/fixtures';
 import { DESKTOP, MOBILE, precedes, resolveColor, style } from '../../shell/helpers';
-import { LABELS, box, filters, tab, textStyles } from './helpers';
+import { LABELS, box, filters, fontsSettled, tab, textStyles } from './helpers';
 
 const DONE_EMPTY = 'Tick một việc ở Chưa xong, nó sẽ hiện ở đây.';
 const FIRST = 'Mua thuốc huyết áp cho bố';
@@ -15,6 +15,7 @@ async function expectTabs(page: Page, gap: number, counts: [number, number, numb
   expect((await slot.innerText()).replace(/\s+/g, '')).toBe(LABELS.map((l, i) => `${l}${counts[i]}`.replace(/\s+/g, '')).join(''));
   await expect(slot.locator('input, select, a, [role="tab"]')).toHaveCount(0);
 
+  await fontsSettled(page);
   const area = await box(slot);
   const boxes = [];
   for (const label of LABELS) boxes.push(await box(tab(page, label)));

@@ -9,6 +9,14 @@ export const filters = (page: Page) => page.locator('[data-slot="filters"]');
 export const tab = (page: Page, label: Label) =>
   filters(page).getByRole('button', { name: new RegExp(`^${label}\\s*\\d+$`) });
 
+/** Waits for the web fonts the page uses: a swap between two measurements moves the tabs. */
+export async function fontsSettled(page: Page) {
+  await page.evaluate(async () => {
+    document.body.getBoundingClientRect(); // lay out first, so the fonts in use have started to load
+    await document.fonts.ready;
+  });
+}
+
 export async function box(locator: Locator) {
   const b = await locator.boundingBox();
   expect(b, 'the element is drawn').not.toBeNull();
@@ -42,6 +50,7 @@ export function textStyles(button: Locator) {
  * as offsets from that edge (-1 is the last row inside the element).
  */
 export async function linesAtBottom(page: Page, locator: Locator, rgb: string): Promise<number[]> {
+  await fontsSettled(page);
   const b = await box(locator);
   const bottom = Math.round(b.y + b.height);
   const clip = { x: Math.ceil(b.x) + 1, y: bottom - 6, width: Math.floor(b.width) - 2, height: 9 };
