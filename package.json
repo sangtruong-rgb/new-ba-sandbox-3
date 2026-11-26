@@ -1,6 +1,14 @@
 {
   "name": "app",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest run",
+    "e2e": "playwright test --reporter=json",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
   "dependencies": {
     "@fontsource/be-vietnam-pro": "5.3.0",
     "@fontsource/literata": "5.3.0",

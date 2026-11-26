@@ -1,0 +1,39 @@
+/* DesignTokens: the only colour names features use. Breakpoint: 1100px
+   (list and detail side by side at and above, one column below). */
+@import '@fontsource/literata/600.css';
+@import '@fontsource/be-vietnam-pro/400.css';
+@import '@fontsource/be-vietnam-pro/600.css';
+
+:root {
+  color-scheme: light;
+  accent-color: #1f4fd1;
+  --bg: #f5f6f8;
+  --paper: #ffffff;
+  --ink: #16213a;
+  --muted: #566075;
+  --accent: #1f4fd1;
+  --accent-ink: #ffffff;
+  --late: #b4361c;
+  --line: #dfe3ea;
+  --brand: #16213a;
+  --brand-ink: #f5f6f8;
+  --font-display: 'Literata', serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    accent-color: #7da2ff;
+    --bg: #0e1320;
+    --paper: #151b2b;
+    --ink: #e6e9f2;
+    --muted: #a1aabe;
+    --accent: #7da2ff;
+    --accent-ink: #0e1320;
+    --late: #ff8a6b;
+    --line: #28314a;
+    --brand: #1b2338;
+    --brand-ink: #e6e9f2;
+  }
+}
